@@ -1,10 +1,18 @@
+
 <!DOCTYPE html>
 <html>
 <body>
 <script>
-localStorage.setItem("redirectURL","https://google.com");
-localStorage.setItem("reloadFlag","yes");
-document.body.innerHTML = "Triggered";
+const params = new URLSearchParams(window.location.search);
+const target = params.get("go");
+
+if (target) {
+  localStorage.setItem("redirectURL", target);
+  localStorage.setItem("reloadFlag", "yes");
+  document.body.innerHTML = "Triggered";
+} else {
+  document.body.innerHTML = "No URL";
+}
 </script>
 </body>
 </html>
