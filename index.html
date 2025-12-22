@@ -11,33 +11,20 @@
 <p id="info">Page loaded</p>
 
 <script>
-  
-
 setInterval(() => {
-  let flag = localStorage.getItem("reloadFlag");
-
-  if (flag === "yes") {
+  if (localStorage.getItem("reloadFlag") === "yes") {
     localStorage.setItem("reloadFlag", "no");
-
-    // mark that redirect should happen after reload
     localStorage.setItem("doRedirect", "yes");
-
     location.reload();
   }
 }, 1000);
 
-// AFTER reload
 window.onload = () => {
-  let shouldRedirect = localStorage.getItem("doRedirect");
-  let target = localStorage.getItem("redirectURL");
-
-  if (shouldRedirect === "yes" && target) {
+  if (localStorage.getItem("doRedirect") === "yes") {
     localStorage.setItem("doRedirect", "no");
-    window.location.href = target;
+    window.location.href = "reveal.html";
   }
 };
-
-  
 </script>
 
 </body>
