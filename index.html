@@ -1,25 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Page</title>
-</head>
-
-<body style="font-family: Arial; text-align:center; margin-top:40px;">
-
-<h2>Waiting for trigger…</h2>
-<p id="info">Page loaded</p>
-
 <script>
 setInterval(() => {
   let flag = localStorage.getItem("reloadFlag");
 
   if (flag === "yes") {
     localStorage.setItem("reloadFlag", "no");
+
+    // mark that redirect should happen after reload
+    localStorage.setItem("doRedirect", "yes");
+
     location.reload();
   }
 }, 1000);
-</script>
 
-</body>
-</html>
+// AFTER reload
+window.onload = () => {
+  let shouldRedirect = localStorage.getItem("doRedirect");
+  let target = localStorage.getItem("redirectURL");
+
+  if (shouldRedirect === "yes" && target) {
+    localStorage.setItem("doRedirect", "no");
+    window.location.href = target;
+  }
+};
+</script>
