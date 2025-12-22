@@ -1,4 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Page</title>
+</head>
+
+<body style="font-family: Arial; text-align:center; margin-top:40px;">
+
+<h2>Waiting for trigger…</h2>
+<p id="info">Page loaded</p>
+
 <script>
+  
+
 setInterval(() => {
   let flag = localStorage.getItem("reloadFlag");
 
@@ -22,4 +36,9 @@ window.onload = () => {
     window.location.href = target;
   }
 };
+
+  
 </script>
+
+</body>
+</html>
