@@ -1,17 +1,16 @@
-
 <!DOCTYPE html>
 <html>
 <body>
 <script>
 const params = new URLSearchParams(window.location.search);
-const target = params.get("go");
+const name = params.get("name");
 
-if (target) {
-  localStorage.setItem("redirectURL", target);
+if (name) {
+  localStorage.setItem("finalName", name);
   localStorage.setItem("reloadFlag", "yes");
   document.body.innerHTML = "Triggered";
 } else {
-  document.body.innerHTML = "No URL";
+  document.body.innerHTML = "No name provided";
 }
 </script>
 </body>
