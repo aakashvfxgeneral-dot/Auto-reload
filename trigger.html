@@ -1,38 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <meta charset="UTF-8">
+  <title>Trigger Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
 </head>
 
 <body>
-<script>
-// 🔴 SAME firebaseConfig HERE
-const firebaseConfig = {
-  apiKey: "PASTE_HERE",
-  authDomain: "PASTE_HERE",
-  databaseURL: "PASTE_HERE",
-  projectId: "PASTE_HERE",
-  storageBucket: "PASTE_HERE",
-  messagingSenderId: "PASTE_HERE",
-  appId: "PASTE_HERE"
-};
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+  <h2 id="status">Triggering...</h2>
 
-// 📥 Read name from URL
-const params = new URLSearchParams(window.location.search);
-let name = params.get("name");
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-if (name) {
-  name = decodeURIComponent(name.replace(/\+/g, " "));
-  name = name.replace(/\b\w/g, c => c.toUpperCase());
-  db.ref("currentName").set(name);
-  document.body.innerHTML = "Triggered";
-} else {
-  document.body.innerHTML = "No name provided";
-}
-</script>
-</body>
-</html>
+  <script>
+    // 🔥 SAME FIREBASE CONFIG
+    const firebaseConfig = {
+      apiKey: "AIzaSyAWtimq6eIKXo-UxMEu0ZoGwc-7UreXfVI",
+      authDomain: "reveal-trigger.firebaseapp.com",
+      databaseURL: "https://reveal-trigger-default-rtdb.firebaseio.com",
+      projectId: "reveal-trigger",
+      storageBucket: "reveal-trigger.firebasestorage.app",
+      messagingSenderId: "74732942904",
+      appId: "1:74732942904:web:00b10acc7e0e6e49c198cd"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const database = firebase.database();
+    const status = document.getElementById("status");
+
+    // 📥 Read name from URL
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
+
+    if (name) {
+      database.ref("reveal/name").set(name);
+      status.innerHTML = `Triggered with
