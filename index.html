@@ -14,27 +14,23 @@
       justify-content: center;
       background: black;
       color: white;
-      font-family: Arial, Helvetica, sans-serif;
-      text-align: center;
+      font-family: Arial, sans-serif;
     }
-
     h1 {
       font-size: 48px;
-      transition: all 0.5s ease;
     }
   </style>
 </head>
 
 <body>
+  <h1 id="text">Waiting for trigger...</h1>
 
-  <h1 id="displayText">Waiting for trigger...</h1>
-
-  <!-- Firebase SDKs (SCRIPT TAG VERSION) -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <script>
-    // 🔥 YOUR FIREBASE CONFIG
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyAWtimq6eIKXo-UxMEu0ZoGwc-7UreXfVI",
       authDomain: "reveal-trigger.firebaseapp.com",
@@ -45,20 +41,30 @@
       appId: "1:74732942904:web:00b10acc7e0e6e49c198cd"
     };
 
-    // Initialize Firebase
+    // Initialize Firebase ONLY ONCE
     firebase.initializeApp(firebaseConfig);
 
-    const database = firebase.database();
-    const displayText = document.getElementById("displayText");
+    const db = firebase.database();
+    const text = document.getElementById("text");
 
-    // 👂 Listen for trigger
-    database.ref("reveal/name").on("value", (snapshot) => {
-      const name = snapshot.val();
-      if (name) {
-        displayText.innerHTML = `✨ ${name} ✨`;
+    console.log("Firebase initialized");
+    console.log("Listening to reveal/name");
+
+    // Force read once (debug)
+    db.ref("reveal/name").once("value").then(snapshot => {
+      console.log("Initial value:", snapshot.val());
+      if (snapshot.val()) {
+        text.innerText = "✨ " + snapshot.val() + " ✨";
+      }
+    });
+
+    // Real-time listener
+    db.ref("reveal/name").on("value", snapshot => {
+      console.log("Value changed:", snapshot.val());
+      if (snapshot.val()) {
+        text.innerText = "✨ " + snapshot.val() + " ✨";
       }
     });
   </script>
-
 </body>
 </html>
